@@ -1,0 +1,38 @@
+#!/bin/bash
+
+if [ -f /etc/X11/xorg.conf.d/40-libinput.conf ]; then
+sudo rm -rf /etc/X11/xorg.conf.d/40-libinput.conf
+fi
+if [ ! -d /etc/X11/xorg.conf.d ]; then
+sudo mkdir -p /etc/X11/xorg.conf.d
+fi
+
+sudo cp -rf ./boot/config-40-HDMI-600x400.txt /boot/config.txt
+if [ -b /dev/mmcblk0p7 ]; then
+sudo cp ./boot/cmdline.txt-noobs /boot/cmdline.txt
+else
+sudo cp ./boot/cmdline.txt /boot/
+fi
+sudo cp ./etc/inittab /etc/
+sudo cp -rf ./config/99-fbturbo.conf-HDMI /usr/share/X11/xorg.conf.d/99-fbturbo.conf
+sudo cp -rf ./config/99-calibration.conf-40-HDMI /etc/X11/xorg.conf.d/99-calibration.conf
+nodeplatform=`uname -n`
+kernel=`uname -r`
+version=`cat /proc/version`
+if test "$nodeplatform" = "raspberrypi";then
+echo "this is raspberrypi kernel"
+version=${version##* }
+echo $version
+if test $version -lt 2017;then
+echo "reboot"
+else
+echo "need to update touch configuration"
+sudo apt-get install xserver-xorg-input-evdev
+sudo cp -rf /usr/share/X11/xorg.conf.d/10-evdev.conf /usr/share/X11/xorg.conf.d/45-evdev.conf
+echo "reboot"
+fi
+else
+echo "this is not raspberrypi kernel, no need to update touch configure, reboot"
+fi
+sudo reboot
+
