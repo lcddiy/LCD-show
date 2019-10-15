@@ -30,7 +30,7 @@ hdmi_mode=1
 
 # uncomment to force a HDMI mode rather than DVI. This can make audio work in
 # DMT (computer monitor) modes
-hdmi_drive=2
+hdmi_drive=1
 
 # uncomment to increase signal to HDMI, if you have interference, blanking, or
 # no display
@@ -63,7 +63,6 @@ dtparam=audio=on
 [all]
 #dtoverlay=vc4-fkms-v3d
 
-hdmi_force_edid_audio=1
 enable_uart=1
 max_usb_current=1
 config_hdmi_boost=7
