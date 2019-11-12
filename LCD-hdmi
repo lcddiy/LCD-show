@@ -1,9 +1,10 @@
-sudo cp -rf ./usr/99-fbturbo.conf-HDMI  /usr/share/X11/xorg.conf.d/99-fbturbo.conf
+sudo cp -rf ./config/99-fbturbo.conf-HDMI  /usr/share/X11/xorg.conf.d/99-fbturbo.conf
 sudo cp ./boot/config-nomal.txt /boot/config.txt
+sudo echo "hdmi_force_hotplug=1" >> /boot/config.txt
 if [ -b /dev/mmcblk0p7 ]; then
-sudo cp ./usr/cmdline.txt-noobs /boot/cmdline.txt
+sudo cp ./boot/cmdline.txt-noobs /boot/cmdline.txt
 else
-sudo cp ./usr/cmdline.txt /boot/
+sudo cp ./boot/cmdline.txt /boot/
 fi
-sudo cp ./usr/inittab /etc/
+sudo cp ./etc/inittab /etc/
 sudo reboot
