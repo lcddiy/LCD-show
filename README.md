@@ -39,6 +39,13 @@ chmod -R 755 LCD-show \
 cd LCD-show \
 sudo ./LCD40-HDMI-600x400-show
 
+-------for 7.0inch HDMI 1024X600--------------  \
+sudo rm -rf LCD-show \
+git clone https://github.com/lcddiy/LCD-show.git \
+chmod -R 755 LCD-show \
+cd LCD-show \
+sudo ./LCD70-HDMI-1024x600-show
+
 -------for HDMI recovery--------------  \
 sudo rm -rf LCD-show \
 git clone https://github.com/lcddiy/LCD-show.git \

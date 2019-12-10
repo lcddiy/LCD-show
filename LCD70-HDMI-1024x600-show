@@ -1,0 +1,17 @@
+#!/bin/bash
+
+sudo cp -rf ./boot/config-70-HDMI-1024x600.txt /boot/config.txt
+if test "$root_dev" = "/dev/mmcblk0p7";then 
+sudo cp ./boot/cmdline.txt-noobs /boot/cmdline.txt 
+else 
+sudo cp ./boot/cmdline.txt /boot/ 
+fi 
+sudo cp ./etc/inittab /etc/ 
+sudo cp -rf ./config/99-fbturbo.conf-HDMI /usr/share/X11/xorg.conf.d/99-fbturbo.conf 
+if [ ! -d /etc/X11/xorg.conf.d ]; then 
+sudo mkdir /etc/X11/xorg.conf.d 
+fi
+sudo cp ./config/40-libinput.conf /etc/X11/xorg.conf.d/40-libinput.conf
+
+echo "reboot now"
+sudo reboot
