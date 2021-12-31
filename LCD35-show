@@ -18,6 +18,43 @@ sudo cp ./boot/cmdline.txt /boot/
 fi
 sudo cp ./etc/inittab /etc/
 
+#FBCP install
+wget --spider -q -o /dev/null --tries=1 -T 10 https://cmake.org/
+if [ $? -eq 0 ]; then
+sudo apt-get update
+sudo apt-get install cmake -y
+type cmake > /dev/null 2>&1
+if [ $? -eq 0 ]; then
+sudo rm -rf rpi-fbcp
+wget --spider -q -o /dev/null --tries=1 -T 10 https://github.com
+if [ $? -eq 0 ]; then
+sudo git clone https://github.com/tasanakorn/rpi-fbcp
+if [ $? -ne 0 ]; then
+echo "git fbcp error, copy native fbcp!!!"
+sudo cp -r ./config/rpi-fbcp .
+fi
+else
+echo "network error, copy native fbcp!!!"
+sudo cp -r ./config/rpi-fbcp .
+fi
+sudo mkdir ./rpi-fbcp/build
+cd ./rpi-fbcp/build/
+sudo cmake ..
+sudo make
+sudo install fbcp /usr/local/bin/fbcp
+cd - > /dev/null
+type fbcp > /dev/null 2>&1
+if [ $? -eq 0 ]; then
+sudo cp -rf ./config/99-fbturbo-fbcp.conf  /usr/share/X11/xorg.conf.d/99-fbturbo.conf
+sudo cp -rf ./etc/rc.local /etc/rc.local
+fi
+else
+echo "install cmake error!!!!"
+fi
+else
+echo "network error, can't install cmake!!!"
+fi
+
 #evdev install
 nodeplatform=`uname -n`
 kernel=`uname -r`
